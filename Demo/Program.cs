@@ -11,16 +11,42 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            test.doStuff();
+            Test();
             Console.ReadKey();
         }
-    }
 
-    public class test
-    {
-        public static void doStuff()
+        public static void Test()
         {
-            const string PARTIAL_MESSAGE = @"Return-path: <>
+            
+            if (MailDeliveryInfo.IsDsn(PARTIAL_MESSAGE))
+            {
+                var report = MailDeliveryInfo.TryCreate(RAW_MESSAGE);
+                if (report != null)
+                {
+                    Console.WriteLine("{0}\r\n{2}\r\nRaw report:\r\n{1}",
+                        report.Date,
+                        report.RawReport,
+                        string.Join(Environment.NewLine,
+                            report.Status
+                            .Select(t =>
+                                string.Format("{0}: {1} ({2})",
+                                t.Key,
+                                t.Value.GetMostSignificantClassificationString(),
+                                t.Value.MostSignificantStatusCode))
+                            .ToArray()));
+                }
+                else
+                {
+                    Console.WriteLine("Failed to parse this message.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not a DSN.");
+            }
+        }
+
+        const string PARTIAL_MESSAGE = @"Return-path: <>
 Received: from xxx ([xxx])
     by xxx with ESMTP; Fri, 04 May 2012 16:18:13 +0200
 From: <Mailer-Daemon@xxx> (Mail Delivery System)
@@ -32,7 +58,7 @@ Content-Type: multipart/report; report-type=delivery-status;
  boundary=""HTB3nt3RR7vw/QMPR4kDPbKg+XWjXIKdC/rfHQ==""
 
 ";
-            const string RAW_MESSAGE = PARTIAL_MESSAGE + @"
+        const string RAW_MESSAGE = PARTIAL_MESSAGE + @"
 This is a MIME-encapsulated message.
 
 --HTB3nt3RR7vw/QMPR4kDPbKg+XWjXIKdC/rfHQ==
@@ -75,32 +101,7 @@ Content-Type: message/rfc822
 
 [original message...]
 ";
-            if (MailDeliveryInfo.IsDsn(PARTIAL_MESSAGE))
-            {
-                var report = MailDeliveryInfo.TryCreate(RAW_MESSAGE);
-                if (report != null)
-                {
-                    Debug.WriteLine(string.Format("{0}\r\n{2}\r\nRaw report:\r\n{1}",
-                        report.Date,
-                        report.RawReport,
-                        string.Join(Environment.NewLine,
-                            report.Status
-                            .Select(t =>
-                                string.Format("{0}: {1} ({2})",
-                                t.Key,
-                                t.Value.GetMostSignificantClassificationString(),
-                                t.Value.MostSignificantStatusCode))
-                            .ToArray())));
-                }
-                else
-                {
-                    Console.WriteLine("Failed to parse this message.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Not a DSN.");
-            }
-        }
     }
+
+   
 }
