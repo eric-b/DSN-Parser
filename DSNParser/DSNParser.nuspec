@@ -13,10 +13,9 @@
     <releaseNotes>
     </releaseNotes>
     <copyright>Copyright 2012</copyright>
-    <tags>DSN SMTP MTA RFC-1893</tags>
+    <tags>DSN SMTP MTA RFC-1893 RFC-3464</tags>
   </metadata>
   <files>
     <file src="bin\Release\DSNParser.pdb" target="/lib/net35" />
-    <file src="bin\Release\DSNParser.xml" target="/lib/net35" />
   </files>
 </package>
