@@ -26,7 +26,7 @@ Evaluates MailDeliveryInfo.IsDsn(rawMessage) and tries to parse the report. Retu
 Basically, each instance of *MailDeliveryInfo* defines:
 
 * a date,
-* the raw report (*Content-Type: message/delivery-status*),
+* the raw report (with *Content-Type: message/delivery-status*),
 * a list of status, each associated with an e-mail (see below),
 * an arbitrary *Uid* property (not filled by the helper methods): can be used by the caller to store the report identifier (from POP3 for example).
 
@@ -65,6 +65,27 @@ Each status defines basically:
 	{
 		Console.WriteLine("Not a DSN.");
 	}
+	
+	// Output:
+	/*
+	04/05/2012 15:25:09
+	test-dsn-failure@gmail.com: PermanentFailure/AddressingStatus/BadDestinationMailboxAddress (5.1.1)
+	Raw report:
+	Content-Description: Delivery report
+	Content-Type: message/delivery-status
+	
+	Reporting-MTA: dns; xxx
+	Arrival-Date: Fri, 04 May 2012 15:25:09 +0200
+	
+	Final-Recipient: rfc822; test-dsn-failure@gmail.com
+	Status: 5.1.1
+	Action: failed
+	Last-Attempt-Date: Fri, 04 May 2012 15:25:09 +0200
+	Diagnostic-Code: smtp; 550-5.1.1 The email account that you tried to reach does not exist. Please try
+	550-5.1.1 double-checking the recipient's email address for typos or
+	550-5.1.1 unnecessary spaces. Learn more at
+	550 5.1.1 http://support.google.com/mail/bin/answer.py?answer=6596 t12si10077186weq.36
+	*/
 	
 ## Limitations, caveats, known bugs
 [Let me know](https://github.com/eric-b/DSN-Parser/issues) if you have troubles with use of this library.
