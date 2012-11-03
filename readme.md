@@ -30,6 +30,8 @@ Basically, each instance of *MailDeliveryInfo* defines:
 * a list of status, each associated with an e-mail (see below),
 * an arbitrary *Uid* property (not filled by the helper methods): can be used by the caller to store the report identifier (from POP3 for example).
 
+The headers of the original (not delivered) message are also accessible.
+
 Each status defines basically:
 
 * an action (ie "Failed", "Delayed", "Delivered", "Relayed" or "Expanded"),
