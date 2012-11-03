@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Eric Boumendil</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/eric-b/DSN-Parser</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>DSN SMTP MTA RFC-1893</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\DSNParser.pdb" target="/lib/net35" />
+    <file src="bin\Release\DSNParser.xml" target="/lib/net35" />
+  </files>
+</package>
