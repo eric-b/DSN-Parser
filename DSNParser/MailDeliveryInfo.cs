@@ -535,6 +535,8 @@ namespace DSNParser
                 throw new ArgumentNullException(action);
             if (string.IsNullOrEmpty(statusCode))
                 throw new ArgumentNullException(statusCode);
+			if (!Char.IsDigit(statusCode[0]))
+                throw new UnknownStatusException(statusCode);
 
             WillRetryUntil = null;
 
@@ -1488,6 +1490,11 @@ Content-Type: message/delivery-status
                 }
                 catch (Exception ex)
                 {
+					if (ex is MailDeliveryInfoException)
+                    {
+                        Debug.WriteLine(string.Format("Failed to parse this message: {0}\r\n{1}", ex.Message, rawMessage));
+                        return null;
+                    }
                     throw new Exception(string.Format("Failed to parse this message: {0}\r\n{1}", ex.Message, rawMessage), ex);
                 }
                 finally
@@ -1500,4 +1507,28 @@ Content-Type: message/delivery-status
         }
 
     }
+
+    
+    public abstract class MailDeliveryInfoException : Exception
+    {
+        public MailDeliveryInfoException(string message) : base(message)
+        {
+
+        }
+
+        public MailDeliveryInfoException(string message, Exception innerException) : base(message, innerException)
+        {
+
+        }
+    }
+
+    [Serializable]
+    public class UnknownStatusException : MailDeliveryInfoException
+    {
+        public UnknownStatusException(string status) : base(string.Format("Status '{0}' is not a valid status code. This message does not comply with RFC 3464.", status))
+        {
+
+        }
+    }
+
 }
