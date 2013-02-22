@@ -532,9 +532,9 @@ namespace DSNParser
         public Status(string action, string statusCode, string diagnosticCode)
         {
             if (string.IsNullOrEmpty(action))
-                throw new ArgumentNullException(action);
+                throw new ArgumentNullException("action");
             if (string.IsNullOrEmpty(statusCode))
-                throw new ArgumentNullException(statusCode);
+                throw new ArgumentNullException("statusCode");
 			if (!Char.IsDigit(statusCode[0]))
                 throw new UnknownStatusException(statusCode);
 
