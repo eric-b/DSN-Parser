@@ -1,3 +1,9 @@
+# This repository has been moved
+
+New location of this repository is: https://codeberg.org/eric-b/DSN-Parser
+
+Following content is not kept up to date.
+
 # Mail Delivery Status Notification (DSN) parser
 
 ## What is it ?
